@@ -6,11 +6,27 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
-function createPrismaClient() {
-  const caCertPath = process.env.DATABASE_CA_CERT_PATH;
+function getCaCert(): string | undefined {
+  // Preferido en producción (ej. Vercel): certificado como variable de entorno,
+  // porque una ruta de archivo leída en tiempo de ejecución no siempre queda
+  // incluida en el paquete de una función serverless.
+  if (process.env.DATABASE_CA_CERT) {
+    return process.env.DATABASE_CA_CERT.replace(/\\n/g, "\n");
+  }
 
-  // Producción (ej. Aiven): conexión SSL con verificación completa del certificado CA.
-  if (caCertPath) {
+  // Alternativa para desarrollo local: leer el certificado de un archivo.
+  if (process.env.DATABASE_CA_CERT_PATH) {
+    return fs.readFileSync(process.env.DATABASE_CA_CERT_PATH, "utf8");
+  }
+
+  return undefined;
+}
+
+function createPrismaClient() {
+  const ca = getCaCert();
+
+  // Conexión SSL con verificación completa del certificado CA (ej. Aiven).
+  if (ca) {
     const adapter = new PrismaMariaDb({
       host: process.env.DATABASE_HOST!,
       port: Number(process.env.DATABASE_PORT ?? 3306),
@@ -18,7 +34,7 @@ function createPrismaClient() {
       password: process.env.DATABASE_PASSWORD!,
       database: process.env.DATABASE_NAME!,
       connectionLimit: 5,
-      ssl: { ca: fs.readFileSync(caCertPath, "utf8") },
+      ssl: { ca },
     });
     return new PrismaClient({ adapter });
   }
