@@ -25,7 +25,7 @@ export default async function DoctorDetallePage({ params }: { params: Promise<{ 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16">
       <div className="grid gap-8 sm:grid-cols-[240px_1fr]">
-        <PlaceholderImage label="Foto doctor" className="aspect-square w-full" />
+        <PlaceholderImage label="Foto doctor" src={doctor.fotoUrl} className="aspect-square w-full" />
 
         <div>
           <h1 className="text-3xl font-bold text-foreground">
@@ -84,8 +84,8 @@ export default async function DoctorDetallePage({ params }: { params: Promise<{ 
               <div key={caso.id} className="rounded-xl border border-border bg-surface p-4">
                 <p className="mb-3 font-medium text-foreground">{caso.titulo}</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <PlaceholderImage label="Antes" className="aspect-square w-full" />
-                  <PlaceholderImage label="Después" className="aspect-square w-full" />
+                  <PlaceholderImage label="Antes" src={caso.fotoAntesUrl} className="aspect-square w-full" />
+                  <PlaceholderImage label="Después" src={caso.fotoDespuesUrl} className="aspect-square w-full" />
                 </div>
               </div>
             ))}

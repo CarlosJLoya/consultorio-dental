@@ -1,3 +1,5 @@
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+
 type Doctor = { id: number; nombre: string; apellido: string };
 
 type ProductoPaquete = {
@@ -102,19 +104,7 @@ export function ProductoPaqueteForm({
         </div>
       </div>
 
-      <div>
-        <label htmlFor="imagenUrl" className="text-sm font-medium text-foreground">
-          URL de la imagen
-        </label>
-        <input
-          id="imagenUrl"
-          name="imagenUrl"
-          type="text"
-          defaultValue={paquete?.imagenUrl ?? ""}
-          placeholder="https://..."
-          className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-        />
-      </div>
+      <ImageUploadField name="imagenUrl" label="Imagen" carpeta="paquetes" defaultValue={paquete?.imagenUrl} />
 
       <div>
         <label htmlFor="ordenDisplay" className="text-sm font-medium text-foreground">

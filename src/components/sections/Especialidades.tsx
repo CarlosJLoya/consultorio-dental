@@ -36,7 +36,7 @@ export async function Especialidades() {
                   aria-label={`Ver perfil del doctor de ${especialidad.nombre}`}
                   className="block h-16 w-16 overflow-hidden rounded-full border border-border transition-transform hover:scale-105"
                 >
-                  <PlaceholderImage label="" className="h-full w-full rounded-full" />
+                  <PlaceholderImage label="" src={doctor.fotoUrl} className="h-full w-full rounded-full" />
                 </Link>
               ))}
             </div>

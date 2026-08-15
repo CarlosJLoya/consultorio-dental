@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+# certificado público CA de Aiven, seguro de commitear (no es una llave privada)
+!certs/aiven-ca.pem
 
 # debug
 npm-debug.log*

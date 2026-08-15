@@ -25,7 +25,7 @@ export async function InstalacionesAlternadas() {
               key={foto.id}
               className={`grid gap-6 sm:grid-cols-2 sm:items-center ${invertido ? "sm:[&>*:first-child]:order-2" : ""}`}
             >
-              <PlaceholderImage label={foto.categoria ?? "Foto del consultorio"} className="aspect-[4/3] w-full" />
+              <PlaceholderImage label={foto.categoria ?? "Foto del consultorio"} src={foto.url} className="aspect-[4/3] w-full" />
               <p className="text-base text-foreground">
                 {foto.titulo ?? "Descripción breve de esta parte del consultorio, pendiente de definir."}
               </p>

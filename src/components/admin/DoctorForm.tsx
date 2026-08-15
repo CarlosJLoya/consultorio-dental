@@ -1,3 +1,5 @@
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+
 type Especialidad = { id: number; nombre: string };
 
 type DoctorConEspecialidades = {
@@ -56,19 +58,7 @@ export function DoctorForm({
         </div>
       </div>
 
-      <div>
-        <label htmlFor="fotoUrl" className="text-sm font-medium text-foreground">
-          URL de la foto
-        </label>
-        <input
-          id="fotoUrl"
-          name="fotoUrl"
-          type="text"
-          defaultValue={doctor?.fotoUrl ?? ""}
-          placeholder="https://..."
-          className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-        />
-      </div>
+      <ImageUploadField name="fotoUrl" label="Foto del doctor" carpeta="doctores" defaultValue={doctor?.fotoUrl} />
 
       <div>
         <label htmlFor="biografiaCorta" className="text-sm font-medium text-foreground">

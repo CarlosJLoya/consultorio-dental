@@ -1,3 +1,5 @@
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+
 type ProductoPaquete = { id: number; nombre: string };
 
 type Promocion = {
@@ -54,20 +56,7 @@ export function PromocionForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="imagenUrl" className="text-sm font-medium text-foreground">
-          URL del banner/imagen
-        </label>
-        <input
-          id="imagenUrl"
-          name="imagenUrl"
-          type="text"
-          required
-          defaultValue={promocion?.imagenUrl}
-          placeholder="https://..."
-          className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-        />
-      </div>
+      <ImageUploadField name="imagenUrl" label="Banner/imagen" carpeta="promociones" defaultValue={promocion?.imagenUrl} required />
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>

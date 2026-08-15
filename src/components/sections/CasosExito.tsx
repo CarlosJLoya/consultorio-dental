@@ -24,8 +24,8 @@ export async function CasosExito() {
               {caso.doctor.nombre} {caso.doctor.apellido}
             </p>
             <div className="grid grid-cols-2 gap-3">
-              <PlaceholderImage label="Antes" className="aspect-square w-full" />
-              <PlaceholderImage label="Después" className="aspect-square w-full" />
+              <PlaceholderImage label="Antes" src={caso.fotoAntesUrl} className="aspect-square w-full" />
+              <PlaceholderImage label="Después" src={caso.fotoDespuesUrl} className="aspect-square w-full" />
             </div>
           </div>
         ))}

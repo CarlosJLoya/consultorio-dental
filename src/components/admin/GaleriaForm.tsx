@@ -1,3 +1,5 @@
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+
 type Foto = {
   titulo: string | null;
   url: string;
@@ -17,20 +19,7 @@ export function GaleriaForm({
 }) {
   return (
     <form action={action} className="grid max-w-xl gap-4">
-      <div>
-        <label htmlFor="url" className="text-sm font-medium text-foreground">
-          URL de la foto
-        </label>
-        <input
-          id="url"
-          name="url"
-          type="text"
-          required
-          defaultValue={foto?.url}
-          placeholder="https://..."
-          className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-        />
-      </div>
+      <ImageUploadField name="url" label="Foto" carpeta="galeria" defaultValue={foto?.url} required />
 
       <div>
         <label htmlFor="titulo" className="text-sm font-medium text-foreground">

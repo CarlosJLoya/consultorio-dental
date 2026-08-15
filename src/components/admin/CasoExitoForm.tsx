@@ -1,3 +1,5 @@
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+
 type Doctor = { id: number; nombre: string; apellido: string };
 
 type CasoExito = {
@@ -83,35 +85,8 @@ export function CasoExitoForm({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor="fotoAntesUrl" className="text-sm font-medium text-foreground">
-            URL foto "antes"
-          </label>
-          <input
-            id="fotoAntesUrl"
-            name="fotoAntesUrl"
-            type="text"
-            required
-            defaultValue={caso?.fotoAntesUrl}
-            placeholder="https://..."
-            className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="fotoDespuesUrl" className="text-sm font-medium text-foreground">
-            URL foto "después"
-          </label>
-          <input
-            id="fotoDespuesUrl"
-            name="fotoDespuesUrl"
-            type="text"
-            required
-            defaultValue={caso?.fotoDespuesUrl}
-            placeholder="https://..."
-            className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
-          />
-        </div>
+        <ImageUploadField name="fotoAntesUrl" label={'Foto "antes"'} carpeta="casos-exito" defaultValue={caso?.fotoAntesUrl} required />
+        <ImageUploadField name="fotoDespuesUrl" label={'Foto "después"'} carpeta="casos-exito" defaultValue={caso?.fotoDespuesUrl} required />
       </div>
 
       <div>
