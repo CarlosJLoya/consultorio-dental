@@ -1,0 +1,195 @@
+// Prisma schema — Sitio web Consultorio Dental
+// Ver contexto y decisiones de diseño en la conversación del proyecto.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model UsuarioAdmin {
+  id           Int       @id @default(autoincrement())
+  nombre       String
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  rol          String    @default("editor")
+  activo       Boolean   @default(true)
+  ultimoLogin  DateTime? @map("ultimo_login")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  testimoniosAprobados Testimonio[] @relation("AprobadoPor")
+
+  @@map("usuarios_admin")
+}
+
+model Especialidad {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  slug   String @unique
+
+  doctores DoctorEspecialidad[]
+
+  @@map("especialidades")
+}
+
+model Doctor {
+  id                Int      @id @default(autoincrement())
+  nombre            String
+  apellido          String
+  slug              String   @unique
+  fotoUrl           String?  @map("foto_url")
+  biografiaCorta    String?  @map("biografia_corta") @db.VarChar(500)
+  biografiaLarga    String?  @map("biografia_larga") @db.Text
+  cedulaProfesional String?  @map("cedula_profesional")
+  aniosExperiencia  Int?     @map("anios_experiencia")
+  ordenDisplay      Int      @default(0) @map("orden_display")
+  activo            Boolean  @default(true)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  especialidades    DoctorEspecialidad[]
+  redesSociales     RedSocial[]
+  testimonios       Testimonio[]
+  casosExito        CasoExito[]
+  productosPaquetes ProductoPaquete[]
+  contactos         Contacto[]
+
+  @@map("doctores")
+}
+
+model DoctorEspecialidad {
+  doctorId       Int @map("doctor_id")
+  especialidadId Int @map("especialidad_id")
+
+  doctor       Doctor       @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  especialidad Especialidad @relation(fields: [especialidadId], references: [id], onDelete: Cascade)
+
+  @@id([doctorId, especialidadId])
+  @@map("doctor_especialidad")
+}
+
+model RedSocial {
+  id         Int    @id @default(autoincrement())
+  doctorId   Int?   @map("doctor_id")
+  plataforma String
+  url        String
+  orden      Int    @default(0)
+
+  doctor Doctor? @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("redes_sociales")
+}
+
+model Testimonio {
+  id             Int       @id @default(autoincrement())
+  doctorId       Int?      @map("doctor_id")
+  nombrePaciente String    @map("nombre_paciente")
+  calificacion   Int
+  comentario     String    @db.Text
+  videoUrl       String?   @map("video_url")
+  fotoUrl        String?   @map("foto_url")
+  estado         String    @default("pendiente")
+  origen         String    @default("formulario_publico")
+  aprobadoPorId  Int?      @map("aprobado_por")
+  aprobadoEn     DateTime? @map("aprobado_en")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  doctor      Doctor?       @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  aprobadoPor UsuarioAdmin? @relation("AprobadoPor", fields: [aprobadoPorId], references: [id], onDelete: SetNull)
+
+  @@map("testimonios")
+}
+
+model CasoExito {
+  id             Int      @id @default(autoincrement())
+  doctorId       Int      @map("doctor_id")
+  titulo         String
+  tratamiento    String?
+  descripcion    String?  @db.Text
+  fotoAntesUrl   String   @map("foto_antes_url")
+  fotoDespuesUrl String   @map("foto_despues_url")
+  publicado      Boolean  @default(false)
+  ordenDisplay   Int      @default(0) @map("orden_display")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("casos_exito")
+}
+
+model Galeria {
+  id           Int      @id @default(autoincrement())
+  titulo       String?
+  url          String
+  categoria    String?
+  ordenDisplay Int      @default(0) @map("orden_display")
+  publicado    Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("galeria")
+}
+
+model Contacto {
+  id              Int      @id @default(autoincrement())
+  nombre          String
+  telefono        String
+  email           String?
+  mensaje         String?  @db.Text
+  doctorInteresId Int?     @map("doctor_interes_id")
+  medioContacto   String   @default("formulario_web") @map("medio_contacto")
+  estado          String   @default("nuevo")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  doctorInteres Doctor? @relation(fields: [doctorInteresId], references: [id], onDelete: SetNull)
+
+  @@map("contactos")
+}
+
+model ConfiguracionSitio {
+  clave String @id
+  valor String @db.Text
+
+  @@map("configuracion_sitio")
+}
+
+model ProductoPaquete {
+  id           Int      @id @default(autoincrement())
+  nombre       String
+  slug         String   @unique
+  descripcion  String?  @db.Text
+  precio       Decimal  @db.Decimal(10, 2)
+  doctorId     Int?     @map("doctor_id")
+  categoria    String?
+  imagenUrl    String?  @map("imagen_url")
+  destacado    Boolean  @default(false)
+  activo       Boolean  @default(true)
+  ordenDisplay Int      @default(0) @map("orden_display")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  doctor      Doctor?     @relation(fields: [doctorId], references: [id], onDelete: SetNull)
+  promociones Promocion[]
+
+  @@map("productos_paquetes")
+}
+
+model Promocion {
+  id                Int      @id @default(autoincrement())
+  titulo            String
+  descripcion       String?  @db.Text
+  imagenUrl         String   @map("imagen_url")
+  enlaceExterno     String?  @map("enlace_externo")
+  productoPaqueteId Int?     @map("producto_paquete_id")
+  fechaInicio       DateTime @map("fecha_inicio")
+  fechaFin          DateTime @map("fecha_fin")
+  activo            Boolean  @default(true)
+  ordenDisplay      Int      @default(0) @map("orden_display")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  productoPaquete ProductoPaquete? @relation(fields: [productoPaqueteId], references: [id], onDelete: SetNull)
+
+  @@map("promociones")
+}
