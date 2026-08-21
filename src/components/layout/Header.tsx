@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { getConfiguracion } from "@/lib/config-sitio";
 
 const NAV_LINKS = [
   { href: "#especialidades", label: "Especialidades" },
@@ -10,13 +11,16 @@ const NAV_LINKS = [
   { href: "#contacto", label: "Contacto" },
 ];
 
-export function Header() {
+export async function Header() {
+  const nombreEmpresa = await getConfiguracion("nombre_empresa", "Consultorio Dental");
+  const logoUrl = await getConfiguracion("logo_url", "");
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-saturate-150">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold text-foreground">
-          <Logo size={32} />
-          Consultorio Dental
+          <Logo size={32} src={logoUrl} />
+          {nombreEmpresa}
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

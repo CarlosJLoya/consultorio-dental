@@ -14,6 +14,7 @@ function fotoDataFromForm(formData: FormData) {
   return {
     url,
     titulo: emptyToNull(formData.get("titulo")),
+    descripcion: emptyToNull(formData.get("descripcion")),
     categoria: emptyToNull(formData.get("categoria")),
     ordenDisplay: toIntOrNull(formData.get("ordenDisplay")) ?? 0,
     publicado: formData.get("publicado") === "on",

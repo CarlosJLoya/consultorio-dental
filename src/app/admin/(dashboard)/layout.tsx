@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const ADMIN_NAV = [
   { href: "/admin", label: "Resumen" },
+  { href: "/admin/configuracion", label: "Configuración" },
   { href: "/admin/doctores", label: "Doctores" },
   { href: "/admin/testimonios", label: "Testimonios" },
   { href: "/admin/casos-exito", label: "Casos de éxito" },

@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 
-type Carpeta = "doctores" | "galeria" | "casos-exito" | "paquetes" | "promociones";
+type Carpeta = "doctores" | "galeria" | "casos-exito" | "paquetes" | "promociones" | "configuracion";
 
 export function ImageUploadField({
   name,

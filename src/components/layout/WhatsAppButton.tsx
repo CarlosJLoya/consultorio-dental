@@ -1,9 +1,11 @@
-const WHATSAPP_NUMBER_PLACEHOLDER = "521XXXXXXXXXX"; // TODO: reemplazar con el número real desde configuracion_sitio
+import { getConfiguracion } from "@/lib/config-sitio";
 
-export function WhatsAppButton() {
+export async function WhatsAppButton() {
+  const telefono = await getConfiguracion("telefono_whatsapp_principal", "521XXXXXXXXXX");
+
   return (
     <a
-      href={`https://wa.me/${WHATSAPP_NUMBER_PLACEHOLDER}`}
+      href={`https://wa.me/${telefono}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Escribir por WhatsApp"

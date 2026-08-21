@@ -7,7 +7,7 @@ import { r2, R2_BUCKET_NAME, R2_PUBLIC_URL } from "@/lib/r2";
 const TIPOS_PERMITIDOS = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const TAMANO_MAXIMO_BYTES = 5 * 1024 * 1024; // 5 MB
 
-const CARPETAS_PERMITIDAS = ["doctores", "galeria", "casos-exito", "paquetes", "promociones"];
+const CARPETAS_PERMITIDAS = ["doctores", "galeria", "casos-exito", "paquetes", "promociones", "configuracion"];
 
 export async function POST(request: Request) {
   const session = await auth();

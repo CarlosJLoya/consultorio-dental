@@ -123,6 +123,7 @@ model CasoExito {
 model Galeria {
   id           Int      @id @default(autoincrement())
   titulo       String?
+  descripcion  String?  @db.Text
   url          String
   categoria    String?
   ordenDisplay Int      @default(0) @map("orden_display")

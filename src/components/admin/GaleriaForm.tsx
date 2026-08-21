@@ -2,6 +2,7 @@ import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 type Foto = {
   titulo: string | null;
+  descripcion: string | null;
   url: string;
   categoria: string | null;
   ordenDisplay: number;
@@ -30,6 +31,19 @@ export function GaleriaForm({
           name="titulo"
           type="text"
           defaultValue={foto?.titulo ?? ""}
+          className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="descripcion" className="text-sm font-medium text-foreground">
+          Descripción (opcional)
+        </label>
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          rows={3}
+          defaultValue={foto?.descripcion ?? ""}
           className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
         />
       </div>
