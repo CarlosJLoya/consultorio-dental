@@ -101,6 +101,9 @@ export default async function DoctorDetallePage({ params }: { params: Promise<{ 
               <div key={t.id} className="rounded-xl border border-border bg-surface p-4">
                 <Estrellas calificacion={t.calificacion} />
                 <p className="mt-2 text-sm text-foreground">"{t.comentario}"</p>
+                {t.videoUrl && (
+                  <video src={t.videoUrl} controls className="mt-2 w-full rounded-lg border border-border" />
+                )}
                 <p className="mt-2 text-xs text-muted">{t.nombrePaciente}</p>
               </div>
             ))}

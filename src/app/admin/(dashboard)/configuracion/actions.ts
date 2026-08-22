@@ -10,6 +10,7 @@ const CAMPOS = [
   "direccion",
   "telefono_whatsapp_principal",
   "logo_url",
+  "logo_url_dark",
   "foto_hero_url",
 ] as const;
 

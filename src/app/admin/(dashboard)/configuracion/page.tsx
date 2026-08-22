@@ -14,7 +14,23 @@ export default async function AdminConfiguracionPage() {
       </p>
 
       <form action={guardarConfiguracion} className="mt-6 grid max-w-2xl gap-4">
-        <ImageUploadField name="logo_url" label="Logo" carpeta="configuracion" defaultValue={config.logo_url} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <ImageUploadField
+            name="logo_url"
+            label="Logo (modo claro)"
+            carpeta="configuracion"
+            defaultValue={config.logo_url}
+          />
+          <ImageUploadField
+            name="logo_url_dark"
+            label="Logo (modo oscuro)"
+            carpeta="configuracion"
+            defaultValue={config.logo_url_dark}
+          />
+        </div>
+        <p className="-mt-2 text-xs text-muted">
+          Usa solo el ícono/símbolo (sin el nombre escrito), ya que el nombre ya se muestra como texto en el sitio.
+        </p>
 
         <ImageUploadField
           name="foto_hero_url"

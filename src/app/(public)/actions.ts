@@ -50,6 +50,7 @@ export async function enviarTestimonio(
       comentario,
       calificacion,
       doctorId: toIntOrNull(formData.get("doctorId")),
+      videoUrl: emptyToNull(formData.get("videoUrl")),
       estado: "pendiente",
       origen: "formulario_publico",
     },

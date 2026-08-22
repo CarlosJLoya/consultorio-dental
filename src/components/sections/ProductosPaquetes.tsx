@@ -27,7 +27,7 @@ export async function ProductosPaquetes() {
               <p className="mt-1 text-2xl font-bold text-primary">${paquete.precio.toString()}</p>
               {paquete.descripcion && <p className="mt-2 flex-1 text-sm text-muted">{paquete.descripcion}</p>}
               <a
-                href="#contacto"
+                href="/#contacto"
                 className="mt-4 rounded-lg border border-border px-4 py-2 text-center text-sm font-medium text-foreground hover:border-primary"
               >
                 Preguntar por WhatsApp

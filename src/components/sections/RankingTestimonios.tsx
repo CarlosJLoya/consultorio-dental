@@ -32,6 +32,9 @@ export async function RankingTestimonios() {
               <div key={t.id} className="rounded-xl border border-border bg-surface p-4">
                 <Estrellas calificacion={t.calificacion} />
                 <p className="mt-2 text-sm text-foreground">"{t.comentario}"</p>
+                {t.videoUrl && (
+                  <video src={t.videoUrl} controls className="mt-3 w-full rounded-lg border border-border" />
+                )}
                 <p className="mt-3 text-xs font-medium text-muted">{t.nombrePaciente}</p>
               </div>
             ))}

@@ -11,13 +11,14 @@ export async function Hero() {
     "Texto de presentación de la empresa — misión, especialidades y por qué elegirnos. Contenido pendiente de definir.",
   );
   const logoUrl = await getConfiguracion("logo_url", "");
+  const logoUrlDark = await getConfiguracion("logo_url_dark", "");
   const fotoHeroUrl = await getConfiguracion("foto_hero_url", "");
 
   return (
     <section className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2 md:items-center md:py-24">
       <div>
         <div className="flex flex-col items-center text-center">
-          <Logo size={56} src={logoUrl} />
+          <Logo size={72} src={logoUrl} srcDark={logoUrlDark} />
           <span className="mt-5 inline-block rounded-full bg-surface px-3 py-1 text-xs font-medium text-primary">
             Nuevos pacientes bienvenidos
           </span>
@@ -34,13 +35,13 @@ export async function Hero() {
         <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">{descripcion}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href="#contacto"
+            href="/#contacto"
             className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Agendar una cita
           </a>
           <a
-            href="#especialidades"
+            href="/#especialidades"
             className="rounded-lg border border-border px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary"
           >
             Conocer a los doctores

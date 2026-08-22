@@ -1,7 +1,31 @@
-export function Logo({ size = 40, src }: { size?: number; src?: string | null }) {
+export function Logo({
+  size = 40,
+  src,
+  srcDark,
+}: {
+  size?: number;
+  src?: string | null;
+  srcDark?: string | null;
+}) {
   if (src) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt="Logo" style={{ width: size, height: size }} className="shrink-0 rounded-xl object-contain" />;
+    return (
+      <span style={{ width: size, height: size }} className="relative inline-block shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt="Logo"
+          className={`h-full w-full rounded-xl object-contain ${srcDark ? "dark:hidden" : ""}`}
+        />
+        {srcDark && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={srcDark}
+            alt="Logo"
+            className="absolute inset-0 hidden h-full w-full rounded-xl object-contain dark:block"
+          />
+        )}
+      </span>
+    );
   }
 
   return (

@@ -4,12 +4,12 @@
 
 :root {
   --background: #ffffff;
-  --surface: #f4f8f9;
-  --foreground: #0f2b30;
-  --muted: #5c7680;
-  --border: #dbe6e8;
-  --primary: #0e8a83;
-  --primary-hover: #0b6f69;
+  --surface: #f7f8fb;
+  --foreground: #141c29;
+  --muted: #5b687b;
+  --border: #dadfe7;
+  --primary: #002254;
+  --primary-hover: #00317a;
   --primary-foreground: #ffffff;
   --whatsapp: #25d366;
   --success: #2f9e6e;
@@ -18,14 +18,14 @@
 }
 
 .dark {
-  --background: #0b1516;
-  --surface: #101f21;
-  --foreground: #eaf4f4;
-  --muted: #93aab0;
-  --border: #1f3437;
-  --primary: #2bbfb3;
-  --primary-hover: #3fd0c4;
-  --primary-foreground: #04201d;
+  --background: #0c1118;
+  --surface: #141a24;
+  --foreground: #eceff4;
+  --muted: #98a3b3;
+  --border: #29313d;
+  --primary: #4c8ef0;
+  --primary-hover: #71a5f4;
+  --primary-foreground: #071634;
   --whatsapp: #25d366;
   --success: #45c08a;
   --warning: #f0ad4e;
@@ -46,12 +46,20 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --font-sans: var(--font-inter);
+  --font-display: var(--font-baloo);
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
 @keyframes cdx-drop {
