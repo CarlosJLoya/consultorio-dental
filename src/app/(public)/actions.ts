@@ -57,5 +57,5 @@ export async function enviarTestimonio(
   });
 
   revalidatePath("/admin/testimonios");
-  return { success: true, message: "¡Gracias por tu opinión! Se publicará después de ser revisada." };
+  return { success: true, message: "Tu comentario se publicará pronto." };
 }
