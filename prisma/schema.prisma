@@ -156,6 +156,17 @@ model ConfiguracionSitio {
   @@map("configuracion_sitio")
 }
 
+model VisitaPagina {
+  id        Int      @id @default(autoincrement())
+  ruta      String
+  referer   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([ruta])
+  @@map("visitas_pagina")
+}
+
 model ProductoPaquete {
   id           Int      @id @default(autoincrement())
   nombre       String

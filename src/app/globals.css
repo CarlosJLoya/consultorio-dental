@@ -93,6 +93,16 @@ h4 {
   display: inline-block;
 }
 
+.carousel-fade {
+  transition: opacity 1s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-fade {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .cdx-letter {
     animation: cdx-drop 6s ease-in-out infinite;

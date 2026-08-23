@@ -9,7 +9,7 @@ type Foto = {
   publicado: boolean;
 };
 
-const CATEGORIAS = ["instalaciones", "equipo", "recepcion", "consultorio"];
+const CATEGORIAS = ["instalaciones", "consultorios", "equipos"];
 
 export function GaleriaForm({
   action,

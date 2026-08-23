@@ -1,6 +1,6 @@
 import { Hero } from "@/components/sections/Hero";
 import { PromocionesBanner } from "@/components/sections/PromocionesBanner";
-import { InstalacionesAlternadas } from "@/components/sections/InstalacionesAlternadas";
+import { NuestroConsultorio } from "@/components/sections/NuestroConsultorio";
 import { Especialidades } from "@/components/sections/Especialidades";
 import { ProductosPaquetes } from "@/components/sections/ProductosPaquetes";
 import { CasosExito } from "@/components/sections/CasosExito";
@@ -16,7 +16,7 @@ export default function HomePage() {
     <>
       <Hero />
       <PromocionesBanner />
-      <InstalacionesAlternadas />
+      <NuestroConsultorio />
       <Especialidades />
       <ProductosPaquetes />
       <CasosExito />
