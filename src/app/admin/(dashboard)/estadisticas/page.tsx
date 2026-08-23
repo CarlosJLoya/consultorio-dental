@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type VisitaPorDia = { dia: Date; total: bigint };
 
 export default async function AdminEstadisticasPage() {
