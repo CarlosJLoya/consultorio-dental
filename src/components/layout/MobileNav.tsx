@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 
 type NavLink = { href: string; label: string };
@@ -40,13 +39,13 @@ export function MobileNav({ links }: { links: NavLink[] }) {
               {link.label}
             </a>
           ))}
-          <Link
+          <a
             href="/agendar"
             onClick={() => setAbierto(false)}
             className="mt-2 rounded-lg bg-primary px-4 py-2 text-center text-sm font-medium text-primary-foreground hover:bg-primary-hover"
           >
             Agendar cita
-          </Link>
+          </a>
         </nav>
       )}
     </div>
