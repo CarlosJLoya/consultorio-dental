@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { MobileNav } from "@/components/layout/MobileNav";
 import { getConfiguracion } from "@/lib/config-sitio";
 
 const NAV_LINKS = [
@@ -44,6 +45,7 @@ export async function Header() {
             Agendar cita
           </Link>
           <ThemeToggle />
+          <MobileNav links={NAV_LINKS} />
         </div>
       </div>
     </header>

@@ -22,6 +22,7 @@ export function AgendarCitaForm({
   const [hora, setHora] = useState<number | null>(null);
   const [ocupados, setOcupados] = useState<Set<string>>(new Set());
   const [cargando, setCargando] = useState(false);
+  const [vistaConfirmacion, setVistaConfirmacion] = useState(false);
 
   const [estado, formAction, isPending] = useActionState(crearCita, undefined);
 
@@ -53,13 +54,14 @@ export function AgendarCitaForm({
 
   useEffect(() => {
     if (!estado?.success) return;
+    setVistaConfirmacion(true);
     // Se abre en una pestaña nueva (no se navega fuera del sitio) para que el
     // paciente pueda volver a esta página fácilmente después de enviar el mensaje.
     window.open(construirEnlaceWhatsApp(estado.cita).url, "_blank", "noopener,noreferrer");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [estado]);
 
-  if (estado?.success) {
+  if (vistaConfirmacion && estado?.success) {
     const { url, fechaLegible } = construirEnlaceWhatsApp(estado.cita);
 
     return (
@@ -77,6 +79,24 @@ export function AgendarCitaForm({
         >
           ¿No se abrió? Confirmar por WhatsApp
         </a>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 border-t border-border pt-4">
+          <button
+            type="button"
+            onClick={() => {
+              setVistaConfirmacion(false);
+              setEspecialidadId(null);
+              setDoctor(null);
+              setHora(null);
+            }}
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Agendar otra cita
+          </button>
+          <a href="/" className="text-sm font-medium text-primary hover:underline">
+            Volver al inicio
+          </a>
+        </div>
       </div>
     );
   }
