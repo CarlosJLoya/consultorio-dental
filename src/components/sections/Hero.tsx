@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Logo } from "@/components/ui/Logo";
 import { getConfiguracion } from "@/lib/config-sitio";
@@ -34,12 +35,12 @@ export async function Hero() {
 
         <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">{descripcion}</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="/#contacto"
+          <Link
+            href="/agendar"
             className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Agendar una cita
-          </a>
+          </Link>
           <a
             href="/#especialidades"
             className="rounded-lg border border-border px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary"

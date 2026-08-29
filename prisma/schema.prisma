@@ -56,6 +56,7 @@ model Doctor {
   casosExito        CasoExito[]
   productosPaquetes ProductoPaquete[]
   contactos         Contacto[]
+  citas             Cita[]
 
   @@map("doctores")
 }
@@ -154,6 +155,23 @@ model ConfiguracionSitio {
   valor String @db.Text
 
   @@map("configuracion_sitio")
+}
+
+model Cita {
+  id             Int      @id @default(autoincrement())
+  doctorId       Int      @map("doctor_id")
+  fecha          DateTime @db.Date
+  hora           Int
+  nombrePaciente String   @map("nombre_paciente")
+  telefono       String
+  notas          String?  @db.Text
+  estado         String   @default("pendiente")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@unique([doctorId, fecha, hora])
+  @@map("citas")
 }
 
 model VisitaPagina {
