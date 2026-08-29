@@ -5,12 +5,15 @@ import { prisma } from "@/lib/prisma";
 import { emptyToNull } from "@/lib/form-helpers";
 import { diasHabilesDisponibles, HORA_MIN, HORA_MAX, formatFechaISO } from "@/lib/citas";
 
-export type EstadoCita =
-  | { success: false; message: string }
-  | {
-      success: true;
-      cita: { doctorNombre: string; fecha: string; hora: number; nombrePaciente: string; telefono: string };
-    };
+export type CitaConfirmada = {
+  doctorNombre: string;
+  fecha: string;
+  hora: number;
+  nombrePaciente: string;
+  telefono: string;
+};
+
+export type EstadoCita = { success: false; message: string } | { success: true; cita: CitaConfirmada };
 
 export async function crearCita(_prevState: EstadoCita | undefined, formData: FormData): Promise<EstadoCita> {
   const doctorId = Number(formData.get("doctorId"));

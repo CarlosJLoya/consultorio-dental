@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { crearCita } from "@/app/(public)/agendar/actions";
+import { crearCita, type CitaConfirmada } from "@/app/(public)/agendar/actions";
 import { diasHabilesDisponibles, formatFechaISO, formatHora, HORAS_DISPONIBLES } from "@/lib/citas";
 
 type Doctor = { id: number; nombre: string; apellido: string };
@@ -37,10 +37,8 @@ export function AgendarCitaForm({
       .finally(() => setCargando(false));
   }, [doctor]);
 
-  useEffect(() => {
-    if (!estado?.success) return;
-
-    const fechaLegible = new Date(`${estado.cita.fecha}T00:00:00Z`).toLocaleDateString("es-MX", {
+  function construirEnlaceWhatsApp(cita: CitaConfirmada) {
+    const fechaLegible = new Date(`${cita.fecha}T00:00:00Z`).toLocaleDateString("es-MX", {
       weekday: "long",
       day: "numeric",
       month: "long",
@@ -48,17 +46,37 @@ export function AgendarCitaForm({
       timeZone: "UTC",
     });
     const mensaje = encodeURIComponent(
-      `Hola, quiero confirmar mi cita:\nDoctor: ${estado.cita.doctorNombre}\nFecha: ${fechaLegible}\nHora: ${formatHora(estado.cita.hora)}\nPaciente: ${estado.cita.nombrePaciente}\nTeléfono: ${estado.cita.telefono}`,
+      `Hola, quiero confirmar mi cita:\nDoctor: ${cita.doctorNombre}\nFecha: ${fechaLegible}\nHora: ${formatHora(cita.hora)}\nPaciente: ${cita.nombrePaciente}\nTeléfono: ${cita.telefono}`,
     );
+    return { url: `https://wa.me/${whatsapp}?text=${mensaje}`, fechaLegible };
+  }
 
-    window.location.href = `https://wa.me/${whatsapp}?text=${mensaje}`;
-  }, [estado, whatsapp]);
+  useEffect(() => {
+    if (!estado?.success) return;
+    // Se abre en una pestaña nueva (no se navega fuera del sitio) para que el
+    // paciente pueda volver a esta página fácilmente después de enviar el mensaje.
+    window.open(construirEnlaceWhatsApp(estado.cita).url, "_blank", "noopener,noreferrer");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado]);
 
   if (estado?.success) {
+    const { url, fechaLegible } = construirEnlaceWhatsApp(estado.cita);
+
     return (
       <div className="rounded-xl border border-border bg-surface p-6 text-center">
         <p className="text-lg font-semibold text-foreground">¡Tu solicitud fue registrada!</p>
-        <p className="mt-2 text-sm text-muted">Te estamos redirigiendo a WhatsApp para confirmar tu cita...</p>
+        <p className="mt-2 text-sm text-muted">
+          {estado.cita.doctorNombre} · {fechaLegible} · {formatHora(estado.cita.hora)}
+        </p>
+        <p className="mt-4 text-sm text-muted">Se abrió WhatsApp en una pestaña nueva para confirmar tu cita.</p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block rounded-lg bg-whatsapp px-5 py-2 text-sm font-semibold text-white hover:opacity-90"
+        >
+          ¿No se abrió? Confirmar por WhatsApp
+        </a>
       </div>
     );
   }
