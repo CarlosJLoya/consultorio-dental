@@ -163,7 +163,8 @@ model Cita {
   fecha          DateTime @db.Date
   hora           Int
   nombrePaciente String   @map("nombre_paciente")
-  telefono       String
+  telefono       String?
+  email          String?
   notas          String?  @db.Text
   estado         String   @default("pendiente")
   createdAt      DateTime @default(now()) @map("created_at")

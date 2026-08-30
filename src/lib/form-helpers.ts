@@ -16,3 +16,11 @@ export function toDecimalOrNull(value: FormDataEntryValue | null): string | null
   const parsed = Number.parseFloat(text);
   return Number.isNaN(parsed) ? null : parsed.toFixed(2);
 }
+
+export function esTelefonoValido(telefono: string): boolean {
+  return /^\+?[0-9]{10,15}$/.test(telefono.replace(/[\s()-]/g, ""));
+}
+
+export function esEmailValido(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}

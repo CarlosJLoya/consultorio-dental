@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
-import { emptyToNull } from "@/lib/form-helpers";
+import { emptyToNull, esEmailValido, esTelefonoValido } from "@/lib/form-helpers";
 import { diasHabilesDisponibles, HORA_MIN, HORA_MAX, formatFechaISO } from "@/lib/citas";
 
 export type CitaConfirmada = {
@@ -10,7 +10,8 @@ export type CitaConfirmada = {
   fecha: string;
   hora: number;
   nombrePaciente: string;
-  telefono: string;
+  telefono: string | null;
+  email: string | null;
 };
 
 export type EstadoCita = { success: false; message: string } | { success: true; cita: CitaConfirmada };
@@ -20,11 +21,24 @@ export async function crearCita(_prevState: EstadoCita | undefined, formData: Fo
   const fecha = String(formData.get("fecha") ?? "");
   const hora = Number(formData.get("hora"));
   const nombrePaciente = String(formData.get("nombrePaciente") ?? "").trim();
-  const telefono = String(formData.get("telefono") ?? "").trim();
+  const telefono = emptyToNull(formData.get("telefono"));
+  const email = emptyToNull(formData.get("email"));
   const notas = emptyToNull(formData.get("notas"));
 
-  if (!nombrePaciente || !telefono) {
-    return { success: false, message: "Nombre y teléfono son obligatorios." };
+  if (!nombrePaciente) {
+    return { success: false, message: "El nombre es obligatorio." };
+  }
+
+  if (!telefono && !email) {
+    return { success: false, message: "Déjanos un teléfono o un correo para contactarte." };
+  }
+
+  if (telefono && !esTelefonoValido(telefono)) {
+    return { success: false, message: "El teléfono no es válido." };
+  }
+
+  if (email && !esEmailValido(email)) {
+    return { success: false, message: "El correo no es válido." };
   }
 
   if (!Number.isInteger(hora) || hora < HORA_MIN || hora > HORA_MAX) {
@@ -49,6 +63,7 @@ export async function crearCita(_prevState: EstadoCita | undefined, formData: Fo
         hora,
         nombrePaciente,
         telefono,
+        email,
         notas,
         estado: "pendiente",
       },
@@ -64,6 +79,6 @@ export async function crearCita(_prevState: EstadoCita | undefined, formData: Fo
 
   return {
     success: true,
-    cita: { doctorNombre: `${doctor.nombre} ${doctor.apellido}`, fecha, hora, nombrePaciente, telefono },
+    cita: { doctorNombre: `${doctor.nombre} ${doctor.apellido}`, fecha, hora, nombrePaciente, telefono, email },
   };
 }

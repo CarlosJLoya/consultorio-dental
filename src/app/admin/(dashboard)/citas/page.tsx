@@ -66,10 +66,28 @@ export default async function AdminCitasPage({
                   Doctor: {c.doctor.nombre} {c.doctor.apellido}
                 </p>
                 <p className="mt-2 text-sm text-foreground">
-                  {c.nombrePaciente} ·{" "}
-                  <a href={`https://wa.me/${c.telefono}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                    {c.telefono}
-                  </a>
+                  {c.nombrePaciente}
+                  {c.telefono && (
+                    <>
+                      {" · "}
+                      <a
+                        href={`https://wa.me/${c.telefono}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:underline"
+                      >
+                        {c.telefono}
+                      </a>
+                    </>
+                  )}
+                  {c.email && (
+                    <>
+                      {" · "}
+                      <a href={`mailto:${c.email}`} className="text-primary hover:underline">
+                        {c.email}
+                      </a>
+                    </>
+                  )}
                 </p>
                 {c.notas && <p className="mt-1 text-sm text-muted">{c.notas}</p>}
               </div>

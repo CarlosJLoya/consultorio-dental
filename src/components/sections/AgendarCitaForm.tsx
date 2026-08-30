@@ -46,8 +46,14 @@ export function AgendarCitaForm({
       year: "numeric",
       timeZone: "UTC",
     });
+    const contacto = [
+      cita.telefono ? `Teléfono: ${cita.telefono}` : null,
+      cita.email ? `Correo: ${cita.email}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
     const mensaje = encodeURIComponent(
-      `Hola, quiero confirmar mi cita:\nDoctor: ${cita.doctorNombre}\nFecha: ${fechaLegible}\nHora: ${formatHora(cita.hora)}\nPaciente: ${cita.nombrePaciente}\nTeléfono: ${cita.telefono}`,
+      `Hola, quiero confirmar mi cita:\nDoctor: ${cita.doctorNombre}\nFecha: ${fechaLegible}\nHora: ${formatHora(cita.hora)}\nPaciente: ${cita.nombrePaciente}\n${contacto}`,
     );
     return { url: `https://wa.me/${whatsapp}?text=${mensaje}`, fechaLegible };
   }
@@ -244,15 +250,30 @@ export function AgendarCitaForm({
             />
           </div>
 
+          <p className="text-xs text-muted">Déjanos al menos un teléfono o un correo para contactarte.</p>
+
           <div>
             <label htmlFor="telefono" className="text-sm font-medium text-foreground">
-              Teléfono de contacto
+              Teléfono de contacto (opcional)
             </label>
             <input
               id="telefono"
               name="telefono"
               type="tel"
-              required
+              pattern="^\+?[0-9\s()-]{10,17}$"
+              title="Ingresa un teléfono válido (10 a 15 dígitos)"
+              className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="text-sm font-medium text-foreground">
+              Correo electrónico (opcional)
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
               className="mt-1 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:border-primary"
             />
           </div>
